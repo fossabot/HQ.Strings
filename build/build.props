@@ -1,4 +1,4 @@
- <!-- Some content based on: https://gist.github.com/attilah/fd3e71f03fd258c496179e0200c57b0b -->
+<!-- Some content based on: https://gist.github.com/attilah/fd3e71f03fd258c496179e0200c57b0b -->
 <Project>
 
   <PropertyGroup>
@@ -48,7 +48,7 @@
 
   <!-- Fix the .nuspec file -->
   <Target Name="PostBuild" AfterTargets="Pack" Condition="'$(Configuration)'=='PackageSources'">
-    <Exec Command="dotnet run --project &quot;.\build\PackagePrep\PackagePrep.csproj&quot; -- nuspec $(ProjectDir)bin\$(Configuration)" />
+    <Exec Command="dotnet run --project &quot;$(SolutionDir)..\package\PackagePrep\PackagePrep.csproj&quot; -- nuspec $(ProjectDir)bin\$(Configuration)" />
   </Target>
 
   <!-- Push PackageId.Version.nupkg -->
