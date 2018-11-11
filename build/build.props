@@ -1,0 +1,70 @@
+ <!-- Some content based on: https://gist.github.com/attilah/fd3e71f03fd258c496179e0200c57b0b -->
+<Project>
+
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <!-- Suppress build outputs -->
+  <PropertyGroup Condition="'$(Configuration)'=='PackageSources'">
+    <MinClientVersion>3.3</MinClientVersion>
+    <IsPackable>true</IsPackable>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <ContentTargetFolders>contentFiles</ContentTargetFolders>
+    <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
+    <NoWarn>CS8021</NoWarn>
+    <NoBuild>true</NoBuild>
+  </PropertyGroup>
+
+  <!-- Hide pre-processor files when working -->
+  <ItemGroup Condition="'$(Configuration)'!='PackageSources'">
+    <None Remove="**\*.pp" />
+  </ItemGroup>
+  
+  <!-- Hide source files when packaging -->
+  <ItemGroup Condition="'$(Configuration)'=='PackageSources'">
+    <None Include="**\*.pp" Exclude="obj\**" />
+    <Compile Remove="**\*.cs" />
+  </ItemGroup>
+   
+  <!-- Redistribute pre-processor files into package. WARNING: the .nuspec is not valid for .pp.cs! -->
+  <ItemGroup Condition="'$(Configuration)'=='PackageSources'">
+    <Content Include="**\*.pp" Exclude="obj\**">
+      <Pack>true</Pack>
+      <PackagePath>$(ContentTargetFolders)\cs\netstandard2.0\$(ProjectName)\%(RecursiveDir)%(Filename)%(Extension)</PackagePath>
+    </Content>
+    <EmbeddedResource Update="@(EmbeddedResource)">
+      <Pack>true</Pack>
+      <PackagePath>$(ContentTargetFolders)\any\any\$(ProjectName)\%(RecursiveDir)%(Filename)%(Extension)</PackagePath>
+    </EmbeddedResource>
+    <PackageReference Remove="@(PackageReference)" />
+  </ItemGroup>
+
+  <!-- Perform a noop-build -->
+  <Target Name="Compile" Condition="'$(Configuration)'=='PackageSources'" />
+  <Target Name="CopyFilesToOutputDirectory" Condition="'$(Configuration)'=='PackageSources'" />
+
+  <!-- Fix the .nuspec file -->
+  <Target Name="PostBuild" AfterTargets="Pack" Condition="'$(Configuration)'=='PackageSources'">
+    <Exec Command="dotnet run --project &quot;.\build\PackagePrep\PackagePrep.csproj&quot; -- nuspec $(ProjectDir)bin\$(Configuration)" />
+  </Target>
+
+  <!-- Push PackageId.Version.nupkg -->
+  <Target Name="PublishBinariesToNuGet" AfterTargets="Pack" Condition="'$(Configuration)'=='Package'">
+    <Exec Command="dotnet nuget push &quot;$(TargetDir)..\$(PackageId).$(PackageVersion).nupkg&quot; -s https://www.nuget.org/api/v2/package" />
+  </Target>
+
+  <!-- Push PackageId.Sources.Version.nupkg -->
+  <Target Name="PublishSourcesToNuGet" AfterTargets="Pack" Condition="'$(Configuration)'=='PackageSources'">
+    <Exec Command="dotnet nuget push &quot;$(TargetDir)..\$(PackageId).$(PackageVersion).nupkg&quot; -s https://www.nuget.org/api/v2/package" />
+  </Target>
+
+  <PropertyGroup>
+    <PreBuildEvent>
+      dotnet run -c Release -p &quot;$(SolutionDir)..\package\PackagePrep\PackagePrep.csproj&quot; -- tokenize $(MSBuildProjectDirectory) $(RootNamespace)
+    </PreBuildEvent>
+  </PropertyGroup>
+
+</Project>

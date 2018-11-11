@@ -1,0 +1,29 @@
+<Project>
+  <!-- Boilerplate/conventional package identifiers -->
+  <PropertyGroup>
+    <Company>HQ.IO Corporation</Company>
+    <Authors>HQ.IO Corporation</Authors>
+    <Copyright>© $([System.DateTime]::Now.Year) HQ.IO Corporation</Copyright>    
+    <PackageIconUrl>https://raw.githubusercontent.com/hq-io/$(MSBuildProjectName)/master/assets/320x320.png</PackageIconUrl>
+    <PackageLicenseUrl>https://github.com/hq-io/$(MSBuildProjectName)/blob/master/LICENSE_FULL.txt</PackageLicenseUrl>
+    <PackageProjectUrl>https://docs.hq.io/$(MSBuildProjectName)</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/hq-io/$(MSBuildProjectName)</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+  </PropertyGroup>
+   
+  <PropertyGroup Condition="'$(Configuration)'!='Debug'">
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>  
+  
+  <!-- Add .Sources suffix to package to support dual releases -->
+  <PropertyGroup Condition="'$(Configuration)'=='PackageSources'">
+    <PackageId>$(MSBuildProjectName).Sources</PackageId>
+  </PropertyGroup>
+  
+  <!-- Include symbols when publishing package binaries -->
+  <PropertyGroup Condition="'$(Configuration)'=='Package'">
+    <IncludeSymbols>true</IncludeSymbols>
+  </PropertyGroup>
+  
+ </Project>

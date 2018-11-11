@@ -1,0 +1,17 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:Boolean x:Key="/Default/CodeStyle/CodeFormatting/CommonFormatter/ENFORCE_LINE_ENDING_STYLE/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeStyle/EditorConfig/EnableStyleCopSupport/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeStyle/EditorConfig/ShowEditorConfigStatusBarIndicator/@EntryValue">True</s:Boolean>
+	<s:String x:Key="/Default/CodeStyle/FileHeader/FileHeaderRegionName/@EntryValue">LICENSE</s:String>
+	<s:String x:Key="/Default/CodeStyle/FileHeader/FileHeaderText/@EntryValue">Unless explicitly acquired and licensed from Licensor under another&#xD;
+license, the contents of this file are subject to the Reciprocal Public&#xD;
+License ("RPL") Version 1.5, or subsequent versions as allowed by the RPL,&#xD;
+and You may not copy or use this file in either source code or executable&#xD;
+form, except in compliance with the terms and conditions of the RPL.&#xD;
+&#xD;
+All software distributed under the RPL is provided strictly on an "AS&#xD;
+IS" basis, WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, AND&#xD;
+LICENSOR HEREBY DISCLAIMS ALL SUCH WARRANTIES, INCLUDING WITHOUT&#xD;
+LIMITATION, ANY WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR&#xD;
+PURPOSE, QUIET ENJOYMENT, OR NON-INFRINGEMENT. See the RPL for specific&#xD;
+language governing rights and limitations under the RPL.</s:String></wpf:ResourceDictionary>
